@@ -46,29 +46,35 @@ main{border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px var(--rule),0 20px 6
 .body{position:relative}
 .body::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(transparent 0 2px,#0004 2px 3px)}
 h1{text-shadow:0 0 12px #39ff6a40}
-@media (min-width:900px){main{max-width:64rem}ul.tree{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1rem;border-left:0;margin-left:0;padding-left:0}ul.tree li{flex:1 1 0;justify-content:center}ul.tree li::before{content:none}ul.tree .dir{border:1px solid var(--rule);width:100%;justify-content:center}}
-.tree{list-style:none;margin:.3rem 0 .6rem .6rem;border-left:1px dashed var(--rule);padding-left:.6rem}
-.tree li{display:flex;align-items:center}.tree li::before{content:"\2500";color:var(--dim);margin-right:.3rem}
-.dir{all:unset;box-sizing:border-box;cursor:pointer;font:700 1.12rem/1.3 var(--mono);color:var(--amber);padding:.5rem .6rem;min-height:48px;display:flex;align-items:center;gap:.4rem;border-radius:2px;transition:color .15s,background .15s}
-.dir .pm{color:var(--dim);font-weight:400}
-.dir:hover{color:#8dffa8;background:#39ff6a14;text-shadow:0 0 8px #39ff6a80}.dir:hover .pm{color:var(--amber)}
-.dir:focus-visible{outline:2px solid var(--amber);outline-offset:2px;color:#8dffa8;background:#39ff6a1f}
+@media (min-width:900px){main{max-width:64rem}}
+.folders{display:grid;grid-template-columns:1fr;gap:.4rem;margin:.6rem 0 1rem}
+.dir{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:.9rem;padding:.5rem .7rem;min-height:64px;border:1px solid transparent;border-radius:3px;color:var(--amber);font:700 1.1rem var(--mono);transition:background .15s,border-color .15s}
+.ico{flex:none;width:56px;height:auto}.ico path{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}.ico .fo{fill:#39ff6a0d}
+.dir:hover{color:#8dffa8;background:#39ff6a12;border-color:var(--rule)}.dir:hover .ico{filter:drop-shadow(0 0 6px #39ff6a80)}
+.dir:focus-visible{outline:2px solid var(--amber);outline-offset:2px;color:#8dffa8}
+.dir[aria-expanded="true"]{color:#8dffa8;border-color:var(--rule);background:#39ff6a0d}.dir[aria-expanded="true"] .v{opacity:0}
+.pan{display:grid;grid-template-rows:0fr;visibility:hidden}.pan>ul{overflow:hidden;min-height:0}
+.pan.open{grid-template-rows:1fr;visibility:visible}
+.sub{list-style:none;margin:0 0 0 1.6rem;padding:0;white-space:pre}
+.sub li{padding:0;line-height:1.35}.sub li:first-child{padding-top:.4rem}.sub li:last-child{padding-bottom:.5rem}.sub li:not(.cmd):not(.root)::before{content:"\251C\2500\2500\00a0";color:var(--dim)}.sub li:not(.cmd):last-child::before{content:"\2514\2500\2500\00a0"}.sub li.root{color:#8dffa8}
+@media (prefers-reduced-motion:no-preference){.pan{transition:grid-template-rows .3s ease,visibility .3s}.v{transition:opacity .2s}}
+@media (min-width:900px){.folders{grid-template-columns:repeat(4,auto);justify-content:start;column-gap:1.5rem}.dir{grid-row:1;grid-column:var(--c);flex-direction:column;gap:.35rem;justify-content:center;padding:.8rem 1.2rem}.ico{width:64px}.pan{grid-row:2;grid-column:1/-1}}
 </style>
 </head>
 <body>
 <main><div class="tb" aria-hidden="true"><span>tty1 · bash</span></div>
-<div class="body"><p class="cmd"><b>iain@imckenzie</b>:~$ <span style="color:var(--ink)">cat name</span></p>
+<div class="body"><p class="cmd"><b>iain@imckenzie</b>:~$ <span style="color:var(--ink)">echo $NAME</span></p>
 <h1>Iain McKenzie<span class="cur" aria-hidden="true"></span></h1>
 <p class="role">sysadmin who still knows what a cable does</p>
 <div class="ls"><p class="cmd"><b>$</b> ls ~/skills</p>
-<ul class="tree"><li><button type="button" class="dir" aria-expanded="false"><span class="pm" aria-hidden="true">[+]</span> systems/</button></li><li><button type="button" class="dir" aria-expanded="false"><span class="pm" aria-hidden="true">[+]</span> networking/</button></li><li><button type="button" class="dir" aria-expanded="false"><span class="pm" aria-hidden="true">[+]</span> web-dev/</button></li></ul>
-<p class="f">security</p>
-<p class="c">ccna.cert</p></div>
+<div class="folders"><button type="button" class="dir" style="--c:1" aria-expanded="false" aria-controls="f-credentials"><svg class="ico" viewBox="0 0 64 52" width="56" height="46" aria-hidden="true" focusable="false"><path class="fo" d="M3 9a3 3 0 0 1 3-3h17l6 6h29a3 3 0 0 1 3 3v31a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M3 18h58"/><path d="M24 33h16"/><path class="v" d="M32 25v16"/></svg><span class="lb">credentials</span></button><div class="pan" id="f-credentials"><ul class="sub"><li class="cmd"><b>$</b> tree credentials/</li><li class="root">credentials/</li><li>ccna.cert</li></ul></div><button type="button" class="dir" style="--c:2" aria-expanded="false" aria-controls="f-systems"><svg class="ico" viewBox="0 0 64 52" width="56" height="46" aria-hidden="true" focusable="false"><path class="fo" d="M3 9a3 3 0 0 1 3-3h17l6 6h29a3 3 0 0 1 3 3v31a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M3 18h58"/><path d="M24 33h16"/><path class="v" d="M32 25v16"/></svg><span class="lb">systems</span></button><div class="pan" id="f-systems"><ul class="sub"><li class="cmd"><b>$</b> tree systems/</li><li class="root">systems/</li><li>sysadmin</li><li>linux</li><li>microsoft-ad</li><li>windows-server</li></ul></div><button type="button" class="dir" style="--c:3" aria-expanded="false" aria-controls="f-networking"><svg class="ico" viewBox="0 0 64 52" width="56" height="46" aria-hidden="true" focusable="false"><path class="fo" d="M3 9a3 3 0 0 1 3-3h17l6 6h29a3 3 0 0 1 3 3v31a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M3 18h58"/><path d="M24 33h16"/><path class="v" d="M32 25v16"/></svg><span class="lb">networking</span></button><div class="pan" id="f-networking"><ul class="sub"><li class="cmd"><b>$</b> tree networking/</li><li class="root">networking/</li><li>cisco</li><li>routing &amp; switching</li><li>firewalls</li></ul></div><button type="button" class="dir" style="--c:4" aria-expanded="false" aria-controls="f-web-dev"><svg class="ico" viewBox="0 0 64 52" width="56" height="46" aria-hidden="true" focusable="false"><path class="fo" d="M3 9a3 3 0 0 1 3-3h17l6 6h29a3 3 0 0 1 3 3v31a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M3 18h58"/><path d="M24 33h16"/><path class="v" d="M32 25v16"/></svg><span class="lb">web-dev</span></button><div class="pan" id="f-web-dev"><ul class="sub"><li class="cmd"><b>$</b> tree web-dev/</li><li class="root">web-dev/</li><li>html/css</li><li>javascript</li><li>cloudflare-pages</li></ul></div></div>
+</div>
 <div class="mail"><span aria-hidden="true">&gt;</span><a href="mailto:hello@imckenzie.uk" id="addr">hello@imckenzie.uk</a><button type="button" id="cp">copy</button></div>
 <p class="sr" role="status" id="st"></p>
-<footer>© 2026</footer></div></main>
+<footer>2026</footer></div></main>
 <script>
 cp.onclick=()=>navigator.clipboard.writeText(addr.textContent).then(()=>{cp.textContent='copied';st.textContent='Email address copied';setTimeout(()=>cp.textContent='copy',2000)});
+const ds=document.querySelectorAll('.dir');ds.forEach(b=>b.onclick=()=>{const o=b.getAttribute('aria-expanded')!=='true';ds.forEach(d=>{d.setAttribute('aria-expanded','false');document.getElementById(d.getAttribute('aria-controls')).classList.remove('open')});if(o){b.setAttribute('aria-expanded','true');document.getElementById(b.getAttribute('aria-controls')).classList.add('open')}});
 </script>
 </body>
 </html>
